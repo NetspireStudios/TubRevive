@@ -106,6 +106,10 @@
     }
     </script>
 
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -178,13 +182,17 @@
         }
 
         .ba-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        header { transition: transform 0.35s ease; }
+        header.header-hidden { transform: translateY(-100%); }
+        .leaflet-container { font-family: 'Inter', sans-serif; }
+        #service-map { z-index: 0; }
     </style>
 </head>
 <body class="bg-background-light text-slate-900 antialiased font-display">
 <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
 
     <!-- ===== HEADER ===== -->
-    <header class="sticky top-0 z-50 w-full bg-background-light/80 backdrop-blur-md border-b border-slate-200">
+    <header class="fixed top-0 z-50 w-full bg-background-light/80 backdrop-blur-md border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <a href="#hero" class="flex items-center gap-2">
@@ -228,7 +236,7 @@
         </div>
     </header>
 
-    <main class="flex-1">
+    <main class="flex-1 pt-20">
 
         <!-- ===== HERO ===== -->
         <section id="hero" class="relative bg-slate-100 overflow-hidden">
@@ -603,6 +611,64 @@
             </div>
         </section>
 
+        <!-- ===== SERVICE AREA MAP ===== -->
+        <section class="py-24 bg-background-light" id="service-area">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex flex-col items-center text-center gap-4 mb-12 fade-up">
+                    <h2 class="text-primary font-bold tracking-widest uppercase text-sm">Service Area</h2>
+                    <h3 class="text-4xl font-black text-slate-900">We Cover Southern Ontario</h3>
+                    <p class="text-slate-600 max-w-2xl">From the Greater Toronto Area to Hamilton, Kitchener-Waterloo, and London — our team brings professional bathtub restoration right to your door.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    <div class="lg:col-span-2 rounded-2xl overflow-hidden shadow-xl border border-slate-200 fade-up">
+                        <div id="service-map" style="height: 480px; width: 100%; z-index: 0;"></div>
+                    </div>
+                    <div class="flex flex-col gap-4 fade-up">
+                        <h4 class="text-xl font-bold text-slate-900 mb-2">Cities We Serve</h4>
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shrink-0">
+                                <span class="material-symbols-outlined text-xl">location_on</span>
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-900">Toronto & GTA</div>
+                                <div class="text-sm text-slate-500">Scarborough, Mississauga, Brampton, Markham, Vaughan, Oakville & more</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shrink-0">
+                                <span class="material-symbols-outlined text-xl">location_on</span>
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-900">Hamilton</div>
+                                <div class="text-sm text-slate-500">Burlington, Stoney Creek, Dundas, Ancaster & more</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shrink-0">
+                                <span class="material-symbols-outlined text-xl">location_on</span>
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-900">Kitchener-Waterloo</div>
+                                <div class="text-sm text-slate-500">Cambridge, Guelph, Waterloo Region & more</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shrink-0">
+                                <span class="material-symbols-outlined text-xl">location_on</span>
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-900">London</div>
+                                <div class="text-sm text-slate-500">St. Thomas, Woodstock, Stratford & more</div>
+                            </div>
+                        </div>
+                        <a href="#contact" class="mt-4 flex items-center justify-center rounded-xl h-12 px-6 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                            Get a Quote for Your Area
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ===== CONTACT ===== -->
         <section class="py-24 bg-slate-900 text-white" id="contact">
             <div class="max-w-7xl mx-auto px-4">
@@ -637,7 +703,7 @@
                                 </div>
                                 <div>
                                     <div class="text-sm text-slate-400">Service Area</div>
-                                    <div class="text-xl font-bold">Greater Toronto Area</div>
+                                    <div class="text-xl font-bold">GTA, Hamilton, Kitchener & London</div>
                                 </div>
                             </div>
                         </div>
@@ -698,6 +764,7 @@
                 </div>
             </div>
         </section>
+
     </main>
 
     <!-- ===== FOOTER ===== -->
@@ -749,8 +816,8 @@
             <div class="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between gap-4 text-xs font-medium">
                 <p>&copy; 2026 TubRevive Restoration Inc. All rights reserved.</p>
                 <div class="flex gap-6">
-                    <p>Serving the Greater Toronto Area</p>
-                    <p>Location: Toronto, ON</p>
+                    <p>Serving Southern Ontario</p>
+                    <p>Toronto, Hamilton, Kitchener & London</p>
                 </div>
             </div>
         </div>
@@ -860,13 +927,36 @@
         }, 1500);
     });
 
-    // Header shrink on scroll
+    // Header: hide on scroll down, show on scroll up or after pause
     const header = document.querySelector('header');
+    let lastScrollY = window.scrollY;
+    let scrollDir = 'up';
+    let idleTimer = null;
+
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
+        const currentY = window.scrollY;
+
+        if (currentY > 50) {
             header.classList.add('shadow-md');
         } else {
             header.classList.remove('shadow-md');
+        }
+
+        if (currentY > lastScrollY && currentY > 80) {
+            scrollDir = 'down';
+            header.classList.add('header-hidden');
+        } else if (currentY < lastScrollY) {
+            scrollDir = 'up';
+            header.classList.remove('header-hidden');
+        }
+
+        lastScrollY = currentY;
+
+        clearTimeout(idleTimer);
+        if (scrollDir === 'down') {
+            idleTimer = setTimeout(() => {
+                header.classList.remove('header-hidden');
+            }, 1500);
         }
     });
 
@@ -948,6 +1038,47 @@
         slider.addEventListener('touchstart', (e) => { dragging = true; updatePosition(e.touches[0].clientX); }, { passive: true });
         window.addEventListener('touchmove', (e) => { if (dragging) updatePosition(e.touches[0].clientX); }, { passive: true });
         window.addEventListener('touchend', () => { dragging = false; });
+    })();
+
+    // Service Area Map
+    (function() {
+        const mapEl = document.getElementById('service-map');
+        if (!mapEl) return;
+
+        const map = L.map('service-map', {
+            scrollWheelZoom: false,
+            zoomControl: true,
+        }).setView([43.4, -80.2], 8);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        const pinIcon = L.divIcon({
+            html: '<div style="background:#137fec;width:32px;height:32px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg></div>',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -28],
+            className: ''
+        });
+
+        const cities = [
+            { name: 'Toronto', lat: 43.6532, lng: -79.3832, desc: 'HQ — Greater Toronto Area' },
+            { name: 'Hamilton', lat: 43.2557, lng: -79.8711, desc: 'Hamilton & Burlington' },
+            { name: 'Kitchener', lat: 43.4516, lng: -80.4925, desc: 'Kitchener-Waterloo & Cambridge' },
+            { name: 'London', lat: 42.9849, lng: -81.2453, desc: 'London & surrounding area' },
+        ];
+
+        cities.forEach(city => {
+            L.marker([city.lat, city.lng], { icon: pinIcon })
+                .addTo(map)
+                .bindPopup('<div style="font-family:Inter,sans-serif;"><strong style="font-size:14px;">' + city.name + '</strong><br><span style="color:#666;font-size:12px;">' + city.desc + '</span></div>');
+        });
+
+        const bounds = L.latLngBounds(cities.map(c => [c.lat, c.lng]));
+        map.fitBounds(bounds.pad(0.3));
     })();
 </script>
 </body>
